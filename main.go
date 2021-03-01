@@ -12,7 +12,10 @@ func main() {
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 		} else {
-			os.Stdout.Write(bytes)
+			_, err := os.Stdout.Write(bytes)
+			if err != nil {
+				fmt.Fprintln(os.Stderr, err)
+			}
 		}
 	}
 }
