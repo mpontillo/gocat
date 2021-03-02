@@ -16,7 +16,7 @@ func main() {
 			var buffer bytes.Buffer
 			r, w, err := os.Pipe()
 			// Spin up a goroutine to read the file
-			go func (){
+			go func() {
 				var err error
 				_, err = io.Copy(w, f)
 				f.Close()
