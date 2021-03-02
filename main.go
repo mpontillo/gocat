@@ -15,6 +15,9 @@ func main() {
 		} else {
 			var buffer bytes.Buffer
 			r, w, err := os.Pipe()
+			if err != nil {
+				fmt.Fprintln(os.Stderr, err)
+			}
 			// Spin up a goroutine to read the file
 			go func() {
 				var err error
