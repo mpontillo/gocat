@@ -10,12 +10,19 @@ import (
 func main() {
 	if len(os.Args) > 1 {
 		f, err := os.Open(os.Args[1])
-		defer f.Close()
 		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 		} else {
 			var buffer bytes.Buffer
-			_, err := io.Copy(&buffer, f)
+			r, w, err := os.Pipe()
+			_, err = io.Copy(w, f)
+			f.Close()
+			w.Close()
+			if err != nil {
+				fmt.Fprintln(os.Stderr, err)
+			}
+			_, err = io.Copy(&buffer, r)
+			r.Close()
 			if err != nil {
 				fmt.Fprintln(os.Stderr, err)
 			}
